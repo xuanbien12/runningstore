@@ -165,7 +165,7 @@
 .search {
     width: 130px;
     background-color: #ffc341;
-    text-transform: uppercase;
+
     height: 55px;
     border: none;
     text-align: center;
@@ -179,6 +179,7 @@
     color: #000;
     font-size: 14px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .search:focus {

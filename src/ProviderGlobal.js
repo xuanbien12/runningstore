@@ -6,7 +6,7 @@ export const ProviderApp = createContext()
 const AppProvider = ({ children }) => {
     const [dataProducts, setDataProduct] = useState([])
     const [cartProducts, setCartProducts] = useState([])
-
+    const [search, setSearch] = useState("")
     useEffect(() => {
         axios.get("https://64a41a3cc3b509573b571155.mockapi.io/api/product/products")
             .then(function (respons) {
@@ -14,10 +14,13 @@ const AppProvider = ({ children }) => {
                 setDataProduct(products)
             })
     }, [])
+    console.log(search)
     const stateProvider = {
         dataProducts,
         setCartProducts,
         cartProducts,
+        setSearch,
+        search
 
     }
 

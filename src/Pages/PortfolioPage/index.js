@@ -9,7 +9,7 @@ import _chunk from 'lodash/chunk'
 
 const PortfolioPage = () => {
     const data = useContext(ProviderApp)
-    const { dataProducts } = data
+    const { dataProducts, search } = data
     const newData = _chunk(dataProducts, 20)
 
     return (

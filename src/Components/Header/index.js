@@ -18,7 +18,7 @@ const Header = () => {
     const [isfixNav, setIsFixNav] = useState(false)
 
     const providerContext = useContext(ProviderApp)
-    const { cartProducts } = providerContext
+    const { cartProducts, setSearch, search } = providerContext
     const user = JSON.parse(localStorage.getItem("login"))
 
 
@@ -87,6 +87,13 @@ const Header = () => {
         })
         setIsShowSetting(!isShowSetting)
     }
+
+    const handleChangeSearch = (e) => {
+        const value = e.target.value
+
+        setSearch(value)
+
+    }
     return (
         <header className={`header ${isfixNav ? "site-header" : ""}`}>
 
@@ -124,7 +131,7 @@ const Header = () => {
                             isShowInput
                                 ?
                                 <div className='nav-navbar1'>
-                                    <Input type="text" name="input" className="search" placeholder="TÌM KIẾM" />
+                                    <Input type="text" name="input" value={search} className="search" placeholder="TÌM KIẾM" onChangeInput={handleChangeSearch} />
                                 </div>
                                 :
                                 null
@@ -200,7 +207,7 @@ const Header = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Input type="text" name="input" className="search" placeholder="tìm kiếm" />
+                                    <Input type="text" name="input" value={search} className="search" placeholder="tìm kiếm" onChangeInput={handleChangeSearch} />
                                 </li>
 
                             </ul>

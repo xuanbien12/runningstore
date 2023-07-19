@@ -1,31 +1,43 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './style.css'
 import _orderBy from 'lodash/orderBy'
 import PagingItem from './components/PagingItem'
 import ProductItem from '../ProductItem'
+import { ProviderApp } from '../../ProviderGlobal'
 
 
 const Products = (props) => {
 
     const { dataProducts } = props
-
-    const [products, setProducts] = useState([])
+    const providerContext = useContext(ProviderApp)
+    const { search } = providerContext
     const [numberRender, setNumberRender] = useState(0);
     const [productsRender, setProductsRender] = useState([])
     const [isActivepaging, setIsActivepaging] = useState(0)
-    // console.log("a", dataProducts)
-    // console.log("d", products)
-    // console.log("C", productsRender)
     useEffect(() => {
-        setProducts(dataProducts)
+        setProductsRender(dataProducts[numberRender])
 
     }, [dataProducts])
+    console.log("eee===", dataProducts)
     useEffect(() => {
-        setProductsRender(products[numberRender])
-    }, [products])
+        const newProducts = dataProducts[numberRender] || []
+        const newProduct = newProducts.filter(item => {
+            const newName = item.name.toLocaleUpperCase()
+            const NewVlue = search.toLocaleUpperCase()
+            if (newName.includes(NewVlue)) {
+                return true
+            }
+        })
+
+        setProductsRender(newProduct)
+
+    }, [search])
+
+
+
     const handleIcrementPaging = (index) => {
         setNumberRender(index)
-        setProductsRender(products[index])
+        setProductsRender(dataProducts[index])
     }
     const handleSortProduct = (e) => {
         const value = e.target.value
@@ -36,7 +48,7 @@ const Products = (props) => {
             const newProducts = _orderBy(productsRender, ["price"], ['desc', 'asc'])
             setProductsRender(newProducts)
         } else {
-            setProductsRender(products[numberRender])
+            setProductsRender(dataProducts[numberRender])
         }
     }
     return (
@@ -53,7 +65,7 @@ const Products = (props) => {
                 <div className='paging'>
                     <ul className='page-numbers dl-fl'>
                         {
-                            products.map((item, index) =>
+                            dataProducts.map((item, index) =>
                                 <PagingItem key={index} title={index} active={isActivepaging == index ? "current" : ""} onSetActive={setIsActivepaging} onIcrementPaging={handleIcrementPaging}
                                 />)
                         }
